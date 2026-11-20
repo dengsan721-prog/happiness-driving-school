@@ -20,13 +20,14 @@ body{overflow-x:hidden;font-size:16px}
 .module-page.active{display:block}
 .module-page .module{margin:0}
 .module{background:transparent;border:0;border-radius:0;box-shadow:none;overflow:visible}
-.module-overview{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow)}
-.module-heading{background:transparent;padding:0;align-items:center;gap:13px}
-.module-number{width:48px;height:48px;border-radius:15px;font-size:18px}
-.module-heading h2{font-size:clamp(23px,3.4vw,31px);margin:0 0 3px}
-.module-note{font-size:15px;line-height:1.5}
-.submodule-nav{display:flex;flex-wrap:wrap;gap:7px;overflow:visible;padding:17px 0 0;border:0;background:transparent}
-.submodule-tab{white-space:normal;max-width:100%;overflow-wrap:anywhere;font-size:13px;line-height:1.35;padding:8px 11px;background:#f7faf9}
+.module-overview{background:#fff;border:1px solid var(--line);border-radius:17px;padding:13px 15px;box-shadow:var(--shadow)}
+.module-heading{display:block;background:transparent;padding:0}
+.module-heading-line{display:flex;align-items:center;gap:8px;min-width:0}
+.module-number{width:30px;height:30px;flex:0 0 30px;border-radius:9px;font-size:12px;box-shadow:none}
+.module-heading h2{font-size:clamp(21px,3vw,27px);line-height:1.2;margin:0}
+.module-note{font-size:12px;line-height:1.35;margin:5px 0 0;white-space:nowrap}
+.submodule-nav{display:flex;flex-wrap:wrap;gap:5px;overflow:visible;padding:10px 0 0;border:0;background:transparent}
+.submodule-tab{white-space:normal;max-width:100%;overflow-wrap:anywhere;gap:3px;font-size:12px;line-height:1.25;padding:6px 8px;background:#f7faf9}
 .submodule-tab.active{background:var(--mint);border-color:var(--teal);color:var(--teal-deep)}
 .submodule-deck{display:block;overflow:visible;height:auto!important;padding:0;margin-top:12px}
 .submodule-page{display:none;width:100%;min-width:0;margin:0;border-radius:22px;scroll-snap-align:none;box-shadow:var(--shadow)}
@@ -50,19 +51,22 @@ body{overflow-x:hidden;font-size:16px}
 .library-card-head h4{flex:1;min-width:0;margin:0;color:var(--teal-deep);font-size:17px;line-height:1.45;overflow-wrap:anywhere}
 .library-category{display:inline-block;margin:0 0 5px;color:#b65839;font-size:12px;font-weight:900}
 .library-group-title{margin:12px 0 4px;color:var(--teal-deep);font-size:14px;font-weight:900}
-.library-line{display:grid;grid-template-columns:24px minmax(0,1fr) auto;align-items:start;gap:7px;padding:9px 0;border-top:1px solid #eaf1ef}
+.library-line{display:grid;grid-template-columns:24px minmax(0,1fr);align-items:start;gap:7px;padding:6px 0;border-top:1px solid #eaf1ef}
 .library-line-no{color:var(--orange);font-size:12px;font-weight:900;line-height:1.8}
+.library-line-body{min-width:0;display:flow-root}
 .library-line p{min-width:0;margin:0;color:#435d61;font-size:15px;line-height:1.6;overflow-wrap:anywhere}
 .library-copy{position:static;left:auto;right:auto;top:auto;flex:0 0 auto;padding:4px 8px;line-height:1.4;cursor:pointer}
+.library-line-body .library-copy{float:right;margin:0 0 2px 6px;padding:2px 4px;font-size:11px;line-height:1.2}
 .library-more{display:block;margin:16px auto 2px;border:1px solid var(--teal);border-radius:999px;background:#fff;color:var(--teal-deep);padding:9px 20px;font:inherit;font-size:14px;font-weight:800;cursor:pointer}
 .library-more[hidden]{display:none}
 .submodule-body .topic h3{font-size:21px}
 .submodule-body h2{font-size:23px}
 .submodule-body h4{font-size:18px}
-.copy-block,.table-block,.record-block{padding:10px 82px 10px 14px}
+.copy-block,.table-block,.record-block{padding:6px 8px}
+.copy-block{display:flow-root;min-height:0;margin:4px 0}
 .copy-block p,.copy-block li{font-size:16px}
 .field-row{font-size:15px}
-.copy-btn{left:auto;right:12px;top:10px;font-size:12px}
+.copy-block .copy-btn{position:static;float:right;left:auto;right:auto;top:auto;margin:0 0 2px 6px;padding:2px 4px;font-size:11px;line-height:1.2}
 .label{color:var(--orange);font-weight:900}
 .label-only{font-size:15px!important;background:var(--yellow)!important}
 .module,.submodule-page,.copy-block,.field-row,.field-value{max-width:100%;overflow-wrap:anywhere}
@@ -71,9 +75,10 @@ body{overflow-x:hidden;font-size:16px}
 @media(max-width:620px){
   .module-nav{grid-template-columns:minmax(0,.65fr) repeat(4,minmax(0,1fr));gap:4px;padding:5px}
   .module-tab{font-size:13px;padding:9px 2px}
-  .module-overview{padding:16px}
-  .module-heading{gap:11px}
-  .module-heading h2{font-size:23px}
+  .module-overview{padding:11px 12px}
+  .module-heading h2{font-size:21px}
+  .submodule-nav{gap:3px;padding-top:8px}
+  .submodule-tab{gap:2px;padding:4px}
   .submodule-body{padding:5px 12px 20px}
   .submodule-title{padding:13px 14px}
   .submodule-title strong{font-size:19px}

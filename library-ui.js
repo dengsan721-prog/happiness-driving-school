@@ -36,7 +36,7 @@
   }
 
   function linesHtml(lines) {
-    return lines.map((line, index) => `<div class="library-line"><span class="library-line-no">${index + 1}</span><p>${escapeHtml(line)}</p>${copyButton(line)}</div>`).join('');
+    return lines.map((line, index) => `<div class="library-line"><span class="library-line-no">${index + 1}</span><div class="library-line-body">${copyButton(line)}<p>${escapeHtml(line)}</p></div></div>`).join('');
   }
 
   function cardHtml(item) {
