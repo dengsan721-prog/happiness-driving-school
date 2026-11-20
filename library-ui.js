@@ -42,7 +42,7 @@
       : [{ title: '', lines: item.lines || [] }];
     const title = item.order ? `${item.order}. ${item.title}` : item.title;
     const wholeText = [item.category, title, ...groups.flatMap(group => [group.title, ...group.lines.map((line, index) => isQuestion ? `${index + 1}. ${line}` : line)])].filter(Boolean).join('\n');
-    const body = groups.filter(group => group.lines.length).map(group => `<div class="library-item-section">${group.title ? `<h5>${group.title}</h5>` : ''}${isQuestion ? `<ol>${group.lines.map(line => `<li>${copyButton(line)}${escapeHtml(line)}</li>`).join('')}</ol>` : group.lines.map(line => `<p>${copyButton(line)}${escapeHtml(line)}</p>`).join('')}</div>`).join('');
+    const body = groups.filter(group => group.lines.length).map(group => `<div class="library-item-section">${group.title ? `<h5>${group.title}</h5>` : ''}${isQuestion ? `<ol>${group.lines.map(line => `<li>${escapeHtml(line)}</li>`).join('')}</ol>` : group.lines.map(line => `<p>${escapeHtml(line)}</p>`).join('')}</div>`).join('');
     return `<details class="library-item"><summary><span class="library-item-label">${item.order ? `<span class="library-item-order">${escapeHtml(item.order)}</span>` : ''}<span>${escapeHtml(item.title)}</span></span>${copyButton(wholeText)}<span class="library-toggle" aria-hidden="true">⌄</span></summary><div class="library-item-body">${body}</div></details>`;
   }
 
