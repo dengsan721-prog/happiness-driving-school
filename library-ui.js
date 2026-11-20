@@ -1,4 +1,5 @@
 (function () {
+  const assetVersion = new URL(document.currentScript.src).search;
   let libraries;
   let loadPromise;
   function loadData() {
@@ -6,7 +7,7 @@
     if (!loadPromise) {
       loadPromise = new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = 'library-data.js';
+        script.src = `library-data.js${assetVersion}`;
         script.onload = () => {
           const source = window.handbookLibraryData;
           libraries = new Map(source.questions.map(library => [library.id, library]));
