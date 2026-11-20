@@ -35,24 +35,29 @@
     })));
   }
 
-  function linesHtml(lines) {
-    return lines.map((line, index) => `<div class="library-line"><span class="library-line-no">${index + 1}</span><div class="library-line-body">${copyButton(line)}<p>${escapeHtml(line)}</p></div></div>`).join('');
-  }
-
-  function cardHtml(item) {
-    const groups = item.questions
+  function itemHtml(item) {
+    const isQuestion = Array.isArray(item.questions);
+    const groups = isQuestion
       ? [{ title: '互动问句', lines: item.questions }, { title: '课后作业', lines: item.homework || [] }]
       : [{ title: '', lines: item.lines || [] }];
-    const wholeText = [item.category, item.title, ...groups.flatMap(group => [group.title, ...group.lines.map((line, index) => `${index + 1}. ${line}`)])].filter(Boolean).join('\n');
-    return `<article class="library-card"><span class="library-category">${escapeHtml(item.category)}</span><div class="library-card-head"><h4>${escapeHtml(item.title)}</h4>${copyButton(wholeText, '整条复制')}</div>${groups.map(group => `${group.title ? `<h5 class="library-group-title">${group.title}</h5>` : ''}${linesHtml(group.lines)}`).join('')}</article>`;
+    const title = item.order ? `${item.order}. ${item.title}` : item.title;
+    const wholeText = [item.category, title, ...groups.flatMap(group => [group.title, ...group.lines.map((line, index) => isQuestion ? `${index + 1}. ${line}` : line)])].filter(Boolean).join('\n');
+    const body = groups.filter(group => group.lines.length).map(group => `<div class="library-item-section">${group.title ? `<h5>${group.title}</h5>` : ''}${isQuestion ? `<ol>${group.lines.map(line => `<li>${copyButton(line)}${escapeHtml(line)}</li>`).join('')}</ol>` : group.lines.map(line => `<p>${copyButton(line)}${escapeHtml(line)}</p>`).join('')}</div>`).join('');
+    return `<details class="library-item"><summary><span class="library-item-label">${item.order ? `<span class="library-item-order">${escapeHtml(item.order)}</span>` : ''}<span>${escapeHtml(item.title)}</span></span>${copyButton(wholeText)}<span class="library-toggle" aria-hidden="true">⌄</span></summary><div class="library-item-body">${body}</div></details>`;
   }
 
   function render(view) {
     const state = view.libraryState;
     const query = state.search.value.trim().toLowerCase();
     const matches = state.entries.filter(item => (state.category === '全部' || item.category === state.category) && (!query || item.searchText.includes(query)));
-    state.results.innerHTML = matches.slice(0, state.limit).map(cardHtml).join('') || '<p class="library-meta">没有找到相关内容，换个词试试。</p>';
-    state.meta.textContent = `共 ${matches.length} 条，当前显示 ${Math.min(state.limit, matches.length)} 条`;
+    const visible = matches.slice(0, state.limit);
+    state.results.innerHTML = state.categories.slice(1).map(category => {
+      const items = visible.filter(item => item.category === category);
+      if (!items.length) return '';
+      const total = matches.filter(item => item.category === category).length;
+      return `<section class="library-module"><div class="library-module-head"><h4>${escapeHtml(category)}</h4><span>${items.length} / ${total} ${state.isQuestion ? '课' : '条'}</span></div><div class="library-item-list">${items.map(itemHtml).join('')}</div></section>`;
+    }).join('') || '<p class="library-meta">没有找到相关内容，换个词试试。</p>';
+    state.meta.textContent = `共 ${matches.length} ${state.isQuestion ? '课' : '条'}，当前显示 ${visible.length} ${state.isQuestion ? '课' : '条'}；点标题展开`;
     state.more.hidden = matches.length <= state.limit;
     state.filters.querySelectorAll('button').forEach(button => button.classList.toggle('active', button.dataset.category === state.category));
   }
@@ -74,9 +79,11 @@
     const entries = entriesFor(library);
     const categories = ['全部', ...new Set(entries.map(item => item.category))];
     const filters = view.querySelector('.library-filter');
-    filters.innerHTML = categories.map(category => `<button type="button" data-category="${escapeHtml(category)}">${escapeHtml(category)}</button>`).join('');
+    filters.innerHTML = categories.map(category => `<button type="button" data-category="${escapeHtml(category)}">${escapeHtml(category)} <span>${category === '全部' ? entries.length : entries.filter(item => item.category === category).length}</span></button>`).join('');
     view.libraryState = {
       entries,
+      categories,
+      isQuestion: Array.isArray(library.modules?.[0]?.courses),
       category: '全部',
       limit: 12,
       search: view.querySelector('.library-search'),
@@ -110,6 +117,8 @@
     if (submodule) init(document.getElementById(submodule.dataset.submoduleLink)?.querySelector('[data-library-view]'));
     const button = event.target.closest('[data-library-copy]');
     if (!button) return;
+    event.preventDefault();
+    event.stopPropagation();
     const value = decodeURIComponent(button.dataset.libraryCopy);
     const copied = () => {
       const old = button.textContent;
