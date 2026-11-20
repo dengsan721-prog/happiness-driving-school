@@ -26,13 +26,15 @@ body{overflow-x:hidden;font-size:16px}
 .module-number{width:30px;height:30px;flex:0 0 30px;border-radius:9px;font-size:12px;box-shadow:none}
 .module-heading h2{font-size:clamp(21px,3vw,27px);line-height:1.2;margin:0}
 .module-note{font-size:12px;line-height:1.35;margin:5px 0 0;white-space:nowrap}
-.submodule-nav{display:flex;flex-wrap:wrap;gap:5px;overflow:visible;padding:10px 0 0;border:0;background:transparent}
-.submodule-tab{white-space:normal;max-width:100%;overflow-wrap:anywhere;gap:3px;font-size:12px;line-height:1.25;padding:6px 8px;background:#f7faf9}
+.submodule-nav{display:flex;flex-wrap:wrap;gap:6px;overflow:visible;padding:10px 0 0;border:0;background:transparent}
+.submodule-tab{white-space:normal;max-width:100%;overflow-wrap:anywhere;gap:5px;font-size:12.5px;line-height:1.25;padding:6px 7px;min-height:32px;background:#f7faf9}
+.submodule-tab span{font-size:14px;line-height:1}
 .submodule-tab.active{background:var(--mint);border-color:var(--teal);color:var(--teal-deep)}
-.submodule-deck{display:block;overflow:visible;height:auto!important;padding:0;margin-top:12px}
+.submodule-deck{display:block;overflow:visible;height:auto!important;padding:0;margin-top:16px}
 .submodule-page{display:none;width:100%;min-width:0;margin:0;border-radius:22px;scroll-snap-align:none;box-shadow:var(--shadow)}
 .submodule-page.active{display:block}
 .submodule-title{padding:16px 19px;background:var(--mint-2)}
+.submodule-title span{display:grid;place-items:center;min-width:31px;height:31px;border-radius:9px;background:var(--orange);color:#fff;font-size:14px}
 .submodule-title strong{display:block;min-width:0;overflow-wrap:anywhere;color:var(--teal-deep);font-size:21px;line-height:1.35}
 .submodule-body{padding:7px 18px 24px;font-size:16px}
 .submodule-body strong{color:var(--teal-deep);font-weight:900;background:linear-gradient(transparent 69%,var(--mint) 69%)}
@@ -62,11 +64,16 @@ body{overflow-x:hidden;font-size:16px}
 .submodule-body .topic h3{font-size:21px}
 .submodule-body h2{font-size:23px}
 .submodule-body h4{font-size:18px}
-.copy-block,.table-block,.record-block{padding:6px 8px}
-.copy-block{display:flow-root;min-height:0;margin:4px 0}
+.copy-block{padding:8px 6px}
+.copy-block{display:flow-root;min-height:0;margin:8px 0}
+.copy-block > p:not(:last-child){margin-bottom:9px}
+.copy-block > ol,.copy-block > ul{margin-top:8px;margin-bottom:8px}
+.submodule-body .topic{padding-top:20px}
+.submodule-body .topic + .topic{margin-top:4px}
 .copy-block p,.copy-block li{font-size:16px}
 .field-row{font-size:15px}
-.copy-block .copy-btn{position:static;float:right;left:auto;right:auto;top:auto;margin:0 0 2px 6px;padding:2px 4px;font-size:11px;line-height:1.2}
+.copy-block .copy-btn{position:static;float:right;left:auto;right:auto;top:auto;margin:0 0 2px 6px;padding:3px 6px;min-width:40px;min-height:32px;font-size:13px;line-height:1.2;cursor:pointer}
+#module-01-part-2 .copy-block,#module-01-part-2 .copy-block:hover{border:0;background:transparent}
 .label{color:var(--orange);font-weight:900}
 .label-only{font-size:15px!important;background:var(--yellow)!important}
 .module,.submodule-page,.copy-block,.field-row,.field-value{max-width:100%;overflow-wrap:anywhere}
@@ -77,8 +84,8 @@ body{overflow-x:hidden;font-size:16px}
   .module-tab{font-size:13px;padding:9px 2px}
   .module-overview{padding:11px 12px}
   .module-heading h2{font-size:21px}
-  .submodule-nav{gap:3px;padding-top:8px}
-  .submodule-tab{gap:2px;padding:4px}
+  .submodule-nav{gap:5px;padding-top:9px}
+  .submodule-tab{gap:4px;padding:5px 7px}
   .submodule-body{padding:5px 12px 20px}
   .submodule-title{padding:13px 14px}
   .submodule-title strong{font-size:19px}
