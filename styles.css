@@ -37,6 +37,25 @@ body{overflow-x:hidden;font-size:16px}
 .submodule-body strong{color:var(--teal-deep);font-weight:900;background:linear-gradient(transparent 69%,var(--mint) 69%)}
 .submodule-body li>strong:first-child{color:#bd5c3d;background:linear-gradient(transparent 69%,#ffe0c9 69%)}
 .submodule-body li::marker{color:var(--orange);font-weight:900}
+.library-toolbar{display:grid;gap:10px;padding:11px 0 16px}
+.library-search{width:100%;min-width:0;border:1px solid var(--line);border-radius:12px;background:#fff;padding:11px 13px;color:var(--ink);font:inherit;font-size:15px}
+.library-search:focus{outline:2px solid var(--teal);outline-offset:2px}
+.library-filter{display:flex;flex-wrap:wrap;gap:6px}
+.library-filter button{border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--teal-deep);padding:7px 10px;font:inherit;font-size:13px;line-height:1.25;cursor:pointer}
+.library-filter button.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.library-meta{margin:0;color:var(--muted);font-size:13px}
+.library-results{display:grid;gap:12px}
+.library-card{min-width:0;border:1px solid var(--line);border-radius:16px;background:#fff;padding:14px;box-shadow:0 5px 16px rgba(20,75,78,.05)}
+.library-card-head{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px}
+.library-card-head h4{flex:1;min-width:0;margin:0;color:var(--teal-deep);font-size:17px;line-height:1.45;overflow-wrap:anywhere}
+.library-category{display:inline-block;margin:0 0 5px;color:#b65839;font-size:12px;font-weight:900}
+.library-group-title{margin:12px 0 4px;color:var(--teal-deep);font-size:14px;font-weight:900}
+.library-line{display:grid;grid-template-columns:24px minmax(0,1fr) auto;align-items:start;gap:7px;padding:9px 0;border-top:1px solid #eaf1ef}
+.library-line-no{color:var(--orange);font-size:12px;font-weight:900;line-height:1.8}
+.library-line p{min-width:0;margin:0;color:#435d61;font-size:15px;line-height:1.6;overflow-wrap:anywhere}
+.library-copy{position:static;left:auto;right:auto;top:auto;flex:0 0 auto;padding:4px 8px;line-height:1.4;cursor:pointer}
+.library-more{display:block;margin:16px auto 2px;border:1px solid var(--teal);border-radius:999px;background:#fff;color:var(--teal-deep);padding:9px 20px;font:inherit;font-size:14px;font-weight:800;cursor:pointer}
+.library-more[hidden]{display:none}
 .submodule-body .topic h3{font-size:21px}
 .submodule-body h2{font-size:23px}
 .submodule-body h4{font-size:18px}
