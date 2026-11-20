@@ -1,10 +1,25 @@
 (function () {
-  const source = window.handbookLibraryData;
-  if (!source) return;
-
-  const libraries = new Map(source.questions.map(library => [library.id, library]));
-  libraries.set('happinessFamilyAnswers', source.family);
-  libraries.set('sixMinuteCollection', source.minutes);
+  let libraries;
+  let loadPromise;
+  function loadData() {
+    if (libraries) return Promise.resolve();
+    if (!loadPromise) {
+      loadPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'library-data.js';
+        script.onload = () => {
+          const source = window.handbookLibraryData;
+          libraries = new Map(source.questions.map(library => [library.id, library]));
+          libraries.set('happinessFamilyAnswers', source.family);
+          libraries.set('sixMinuteCollection', source.minutes);
+          resolve();
+        };
+        script.onerror = () => { loadPromise = null; script.remove(); reject(new Error('资料加载失败')); };
+        document.body.appendChild(script);
+      });
+    }
+    return loadPromise;
+  }
   const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   })[character]);
@@ -41,8 +56,18 @@
     state.filters.querySelectorAll('button').forEach(button => button.classList.toggle('active', button.dataset.category === state.category));
   }
 
-  function init(view) {
-    if (!view || view.libraryState) return;
+  async function init(view) {
+    if (!view || view.libraryState || view.dataset.loading) return;
+    view.dataset.loading = 'true';
+    const meta = view.querySelector('.library-meta');
+    meta.textContent = '正在打开资料…';
+    try {
+      await loadData();
+    } catch (error) {
+      meta.textContent = '资料暂时没打开，请再点一次这个小模块。';
+      delete view.dataset.loading;
+      return;
+    }
     const library = libraries.get(view.dataset.libraryView);
     if (!library) return;
     const entries = entriesFor(library);
@@ -76,6 +101,7 @@
       render(view);
     });
     render(view);
+    delete view.dataset.loading;
   }
 
   document.addEventListener('click', event => {
